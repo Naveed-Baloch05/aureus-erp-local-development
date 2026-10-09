@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use RuntimeException;
+use Webkul\PluginManager\Console\Commands\InstallCommand;
 use Webkul\PluginManager\Package;
 use Webkul\PluginManager\PackageServiceProvider;
 use Webkul\Security\Livewire\AcceptInvitation;
@@ -86,7 +87,8 @@ class SupportServiceProvider extends PackageServiceProvider
                 '2026_06_12_000001_create_brand_settings',
             ])
             ->runsSettings()
-            ->hasSeeder('Webkul\\Support\\Database\\Seeders\\DatabaseSeeder');
+            ->hasSeeder('Webkul\\Support\\Database\\Seeders\\DatabaseSeeder')
+            ->hasInstallCommand(function (InstallCommand $command) {});
     }
 
     public function packageBooted(): void

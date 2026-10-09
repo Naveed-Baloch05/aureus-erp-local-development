@@ -17,6 +17,8 @@ class LocationSeeder extends Seeder
     public function run(): void
     {
         $user = User::first();
+        $companyId = $user?->default_company_id ?? Company::first()?->id ?? 1;
+        $creatorId = $user?->id ?? 1;
 
         DB::table('inventories_rules')->delete();
 
@@ -161,7 +163,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 1,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => now(),
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -179,7 +181,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 3,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => null,
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -197,7 +199,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 3,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => null,
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -215,7 +217,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 3,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => null,
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -233,7 +235,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 1,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => null,
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -251,7 +253,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => true,
                 'parent_id'    => 11,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => null,
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -269,7 +271,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 11,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => now(),
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -287,7 +289,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 11,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => now(),
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -305,7 +307,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 11,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => now(),
                 'created_at'   => now(),
                 'updated_at'   => now(),
@@ -323,7 +325,7 @@ class LocationSeeder extends Seeder
                 'is_replenish' => false,
                 'parent_id'    => 11,
                 'creator_id'   => $user->id,
-                'company_id'   => $user->default_company_id,
+                'company_id'   => $companyId,
                 'deleted_at'   => now(),
                 'created_at'   => now(),
                 'updated_at'   => now(),

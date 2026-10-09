@@ -9,6 +9,7 @@ use Webkul\Inventory\Enums\ProcureMethod;
 use Webkul\Inventory\Enums\RuleAction;
 use Webkul\Inventory\Enums\RuleAuto;
 use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
 
 class RuleSeeder extends Seeder
 {
@@ -18,6 +19,8 @@ class RuleSeeder extends Seeder
     public function run(): void
     {
         $user = User::first();
+        $companyId = $user?->default_company_id ?? Company::first()?->id ?? 1;
+        $creatorId = $user?->id ?? 1;
 
         DB::table('inventories_rules')->delete();
 
@@ -39,7 +42,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 12,
                 'route_id'                 => 2,
                 'operation_type_id'        => 1,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -61,7 +64,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 3,
                 'operation_type_id'        => 2,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -83,7 +86,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 4,
                 'operation_type_id'        => 1,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -105,7 +108,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 15,
                 'route_id'                 => 4,
                 'operation_type_id'        => 8,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -127,7 +130,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 1,
                 'operation_type_id'        => 2,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -149,7 +152,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 14,
                 'route_id'                 => 2,
                 'operation_type_id'        => 5,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -171,7 +174,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 12,
                 'route_id'                 => 2,
                 'operation_type_id'        => 6,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -193,7 +196,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 3,
                 'operation_type_id'        => 3,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -215,7 +218,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 15,
                 'route_id'                 => 3,
                 'operation_type_id'        => 4,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -237,7 +240,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 3,
                 'operation_type_id'        => 2,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -259,7 +262,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 12,
                 'route_id'                 => 2,
                 'operation_type_id'        => 6,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -281,7 +284,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 4,
                 'operation_type_id'        => 1,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -303,7 +306,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 12,
                 'route_id'                 => 5,
                 'operation_type_id'        => 1,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),
@@ -325,7 +328,7 @@ class RuleSeeder extends Seeder
                 'destination_location_id'  => 5,
                 'route_id'                 => 6,
                 'operation_type_id'        => 9,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),

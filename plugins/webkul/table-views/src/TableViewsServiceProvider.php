@@ -7,6 +7,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
+use Webkul\PluginManager\Console\Commands\InstallCommand;
 use Webkul\PluginManager\Package;
 use Webkul\PluginManager\PackageServiceProvider;
 
@@ -26,7 +27,8 @@ class TableViewsServiceProvider extends PackageServiceProvider
                 '2024_11_19_142134_create_table_views_table',
                 '2024_11_21_142134_create_table_view_favorites_table',
             ])
-            ->runsMigrations();
+            ->runsMigrations()
+            ->hasInstallCommand(function (InstallCommand $command) {});
     }
 
     public function packageBooted(): void

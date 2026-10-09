@@ -52,12 +52,20 @@ class TopAssigneesWidget extends BaseWidget
         }
 
         $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
+            Carbon::parse($this->pageFilters['startDate'])->startOfDay() :
             null;
 
         $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
+            Carbon::parse($this->pageFilters['endDate'])->endOfDay() :
+            null;
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('analytic_records.created_at', [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->where('analytic_records.created_at', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->where('analytic_records.created_at', '<=', $endDate);
+        }
 
         $query = $query
             ->join('users', 'users.id', '=', 'analytic_records.user_id')
@@ -67,7 +75,6 @@ class TopAssigneesWidget extends BaseWidget
                 SUM(unit_amount) as total_hours,
                 COUNT(DISTINCT task_id) as total_tasks
             ')
-            ->whereBetween('analytic_records.created_at', [$startDate, $endDate])
             ->groupBy('user_id', 'users.name')
             ->orderByRaw('SUM(unit_amount) DESC')
             ->limit(10);

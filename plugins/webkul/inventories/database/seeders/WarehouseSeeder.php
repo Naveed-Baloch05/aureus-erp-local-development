@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Inventory\Enums\DeliveryStep;
 use Webkul\Inventory\Enums\ReceptionStep;
 use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
 
 class WarehouseSeeder extends Seeder
 {
@@ -16,6 +17,8 @@ class WarehouseSeeder extends Seeder
     public function run(): void
     {
         $user = User::first();
+        $companyId = $user?->default_company_id ?? Company::first()?->id ?? 1;
+        $creatorId = $user?->id ?? 1;
 
         DB::table('inventories_warehouses')->delete();
 
@@ -27,7 +30,7 @@ class WarehouseSeeder extends Seeder
                 'sort'                     => 1,
                 'reception_steps'          => ReceptionStep::ONE_STEP,
                 'delivery_steps'           => DeliveryStep::ONE_STEP,
-                'company_id'               => $user->default_company_id,
+                'company_id'               => $companyId,
                 'creator_id'               => $user->id,
                 'created_at'               => now(),
                 'updated_at'               => now(),

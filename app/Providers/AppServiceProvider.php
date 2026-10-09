@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Component;
@@ -24,6 +25,21 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // Super-admin gate bypass: case-insensitive role check
+        // because the Role model's getNameAttribute() ucfirst's the stored name.
+        Gate::before(function ($user, string $ability): ?bool {
+            if (
+                method_exists($user, 'getRoleNames') &&
+                $user->getRoleNames()
+                    ->map(fn ($r) => strtolower($r))
+                    ->contains('super_admin')
+            ) {
+                return true;
+            }
+
+            return null;
+        });
 
         on('dehydrate', function (Component $component): void {
             if (! Livewire::isLivewireRequest()) {

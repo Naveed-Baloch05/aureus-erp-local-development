@@ -124,9 +124,10 @@ class PluginsTable
 
                                 $artisan = escapeshellarg(base_path('artisan'));
 
-                                $commandName = escapeshellarg("{$record->name}:install");
+                                // On Windows, do NOT quote the command name — it breaks Artisan resolution
+                                $commandName = $record->name.':install';
 
-                                $cmd = static::buildTimeoutCommand(300, "$php $artisan $commandName --no-interaction 2>&1");
+                                $cmd = static::buildTimeoutCommand(300, "{$php} {$artisan} {$commandName} --no-interaction 2>&1");
 
                                 $output = [];
 
@@ -183,7 +184,7 @@ class PluginsTable
                         ->icon('heroicon-o-trash')
                         ->color('danger')
                         ->modalWidth(Width::ExtraLarge)
-                        ->visible(fn ($record) => $record->is_installed)
+                        ->visible(fn ($record) => $record->is_installed && $record->package !== null && ! $record->package->isCore)
                         ->modalHeading(__('plugin-manager::filament/resources/plugin.actions.uninstall.heading'))
                         ->modalSubmitActionLabel(__('plugin-manager::filament/resources/plugin.actions.uninstall.submit'))
                         ->modalSubmitAction(

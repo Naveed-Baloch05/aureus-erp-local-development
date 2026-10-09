@@ -5,6 +5,7 @@ namespace Webkul\Inventory\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
 
 class RouteSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class RouteSeeder extends Seeder
     public function run(): void
     {
         $user = User::first();
+        $companyId = $user?->default_company_id ?? Company::first()?->id ?? 1;
+        $creatorId = $user?->id ?? 1;
 
         DB::table('inventories_routes')->delete();
 
@@ -26,7 +29,7 @@ class RouteSeeder extends Seeder
                 'product_category_selectable' => false,
                 'warehouse_selectable'        => false,
                 'packaging_selectable'        => false,
-                'company_id'                  => $user->default_company_id,
+                'company_id'                  => $companyId,
                 'creator_id'                  => $user->id,
                 'deleted_at'                  => now(),
                 'created_at'                  => now(),
@@ -39,7 +42,7 @@ class RouteSeeder extends Seeder
                 'product_category_selectable' => true,
                 'warehouse_selectable'        => true,
                 'packaging_selectable'        => false,
-                'company_id'                  => $user->default_company_id,
+                'company_id'                  => $companyId,
                 'creator_id'                  => $user->id,
                 'deleted_at'                  => null,
                 'created_at'                  => now(),
@@ -52,7 +55,7 @@ class RouteSeeder extends Seeder
                 'product_category_selectable' => true,
                 'warehouse_selectable'        => true,
                 'packaging_selectable'        => false,
-                'company_id'                  => $user->default_company_id,
+                'company_id'                  => $companyId,
                 'creator_id'                  => $user->id,
                 'deleted_at'                  => null,
                 'created_at'                  => now(),
@@ -65,7 +68,7 @@ class RouteSeeder extends Seeder
                 'product_category_selectable' => true,
                 'warehouse_selectable'        => false,
                 'packaging_selectable'        => false,
-                'company_id'                  => $user->default_company_id,
+                'company_id'                  => $companyId,
                 'creator_id'                  => $user->id,
                 'deleted_at'                  => now(),
                 'created_at'                  => now(),

@@ -6,7 +6,6 @@ use App\Http\Middleware\ApplyBrandSettings;
 use App\Http\Middleware\SetLocale;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
-use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,6 +23,11 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
+use Webkul\Project\Filament\Widgets\StatsOverviewWidget as ProjectStatsOverviewWidget;
+use Webkul\Project\Filament\Widgets\TaskByStageChart;
+use Webkul\Project\Filament\Widgets\TaskByStateChart;
+use Webkul\Project\Filament\Widgets\TopAssigneesWidget;
+use Webkul\Project\Filament\Widgets\TopProjectsWidget;
 use Webkul\Support\Enums\NavigationGroup;
 use Webkul\Support\Filament\Pages\Profile;
 use Webkul\Support\GlobalSearchProvider;
@@ -90,6 +94,13 @@ class AdminPanelProvider extends PanelProvider
                     ->defaultLocales(array_keys(config('app.supported_locales'))),
             ])
             ->globalSearch(provider: GlobalSearchProvider::class)
+            ->widgets([
+                ProjectStatsOverviewWidget::class,
+                TaskByStageChart::class,
+                TaskByStateChart::class,
+                TopProjectsWidget::class,
+                TopAssigneesWidget::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -105,10 +116,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->multiFactorAuthentication([
-                AppAuthentication::make()
-                    ->recoverable(),
             ]);
     }
 }

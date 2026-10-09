@@ -2,6 +2,7 @@
 
 namespace Webkul\Analytic;
 
+use Webkul\PluginManager\Console\Commands\InstallCommand;
 use Webkul\PluginManager\Package;
 use Webkul\PluginManager\PackageServiceProvider;
 
@@ -17,7 +18,8 @@ class AnalyticServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 '2024_12_18_131844_create_analytic_records_table',
             ])
-            ->runsMigrations();
+            ->runsMigrations()
+            ->hasInstallCommand(function (InstallCommand $command) {});
     }
 
     public function packageBooted(): void

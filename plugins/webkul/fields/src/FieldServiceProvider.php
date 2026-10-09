@@ -8,6 +8,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\Facades\Gate;
 use Webkul\Field\Models\Field;
 use Webkul\Field\Policies\FieldPolicy;
+use Webkul\PluginManager\Console\Commands\InstallCommand;
 use Webkul\PluginManager\Package;
 use Webkul\PluginManager\PackageServiceProvider;
 
@@ -26,7 +27,8 @@ class FieldServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 '2024_11_13_052541_create_custom_fields_table',
             ])
-            ->runsMigrations();
+            ->runsMigrations()
+            ->hasInstallCommand(function (InstallCommand $command) {});
     }
 
     public function packageBooted(): void

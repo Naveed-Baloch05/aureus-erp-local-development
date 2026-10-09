@@ -9,6 +9,7 @@ use Webkul\Inventory\Enums\MoveType;
 use Webkul\Inventory\Enums\OperationType;
 use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
 
 class OperationTypeSeeder extends Seeder
 {
@@ -18,6 +19,8 @@ class OperationTypeSeeder extends Seeder
     public function run(): void
     {
         $user = User::first();
+        $companyId = $user?->default_company_id ?? Company::first()?->id ?? 1;
+        $creatorId = $user?->id ?? 1;
 
         DB::table('inventories_operation_types')->delete();
 
@@ -41,7 +44,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 4,
                 'destination_location_id' => 12,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => null,
                 'created_at'              => now(),
@@ -65,7 +68,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 12,
                 'destination_location_id' => 5,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => null,
                 'created_at'              => now(),
@@ -89,7 +92,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 12,
                 'destination_location_id' => 16,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -113,7 +116,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 16,
                 'destination_location_id' => 15,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -137,7 +140,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 13,
                 'destination_location_id' => 14,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -161,7 +164,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 14,
                 'destination_location_id' => 12,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -185,7 +188,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 12,
                 'destination_location_id' => 12,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -209,7 +212,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 13,
                 'destination_location_id' => 15,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),
@@ -233,7 +236,7 @@ class OperationTypeSeeder extends Seeder
                 'show_operations'         => false,
                 'source_location_id'      => 4,
                 'destination_location_id' => 5,
-                'company_id'              => $user->default_company_id,
+                'company_id'              => $companyId,
                 'creator_id'              => $user->id,
                 'deleted_at'              => now(),
                 'created_at'              => now(),

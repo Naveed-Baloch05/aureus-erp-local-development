@@ -58,12 +58,20 @@ class TopProjectsWidget extends BaseWidget
         }
 
         $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
+            Carbon::parse($this->pageFilters['startDate'])->startOfDay() :
             null;
 
         $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
+            Carbon::parse($this->pageFilters['endDate'])->endOfDay() :
+            null;
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('analytic_records.created_at', [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->where('analytic_records.created_at', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->where('analytic_records.created_at', '<=', $endDate);
+        }
 
         $query = $query
             ->join('projects_projects', 'projects_projects.id', '=', 'analytic_records.project_id')
@@ -73,7 +81,6 @@ class TopProjectsWidget extends BaseWidget
                 SUM(analytic_records.unit_amount) as total_hours,
                 COUNT(DISTINCT analytic_records.task_id) as total_tasks
             ')
-            ->whereBetween('analytic_records.created_at', [$startDate, $endDate])
             ->groupBy('analytic_records.project_id', 'projects_projects.name')
             ->orderByRaw('SUM(analytic_records.unit_amount) DESC')
             ->limit(10);

@@ -7,6 +7,7 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
 use Livewire\Livewire;
 use Webkul\Chatter\Livewire\ChatterPanel;
+use Webkul\PluginManager\Console\Commands\InstallCommand;
 use Webkul\PluginManager\Package;
 use Webkul\PluginManager\PackageServiceProvider;
 
@@ -28,7 +29,8 @@ class ChatterServiceProvider extends PackageServiceProvider
                 '2024_12_23_080148_create_chatter_attachments_table',
                 '2025_03_12_072356_add_column_is_read_to_chatter_messages_table',
             ])
-            ->runsMigrations();
+            ->runsMigrations()
+            ->hasInstallCommand(function (InstallCommand $command) {});
     }
 
     public function packageBooted(): void

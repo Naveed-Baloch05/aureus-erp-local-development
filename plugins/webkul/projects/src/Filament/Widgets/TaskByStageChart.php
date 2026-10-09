@@ -37,9 +37,17 @@ class TaskByStageChart extends ChartWidget
             'labels'   => [],
         ];
 
-        foreach (TaskStage::all() as $stage) {
+        $stageQuery = TaskStage::query();
+
+        if (! empty($this->pageFilters['selectedProjects'])) {
+            $stageQuery->whereIn('project_id', $this->pageFilters['selectedProjects']);
+        }
+
+        $stages = $stageQuery->get();
+
+        foreach ($stages as $stage) {
             if (in_array($stage->name, $datasets['labels'])) {
-                $datasets['labels'][] = $stage->name.' '.$stage->id;
+                $datasets['labels'][] = $stage->name.' ('.$stage->project?->name.')';
             } else {
                 $datasets['labels'][] = $stage->name;
             }
@@ -67,15 +75,22 @@ class TaskByStageChart extends ChartWidget
             }
 
             $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['startDate']) :
+                Carbon::parse($this->pageFilters['startDate'])->startOfDay() :
                 null;
 
             $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['endDate']) :
-                now();
+                Carbon::parse($this->pageFilters['endDate'])->endOfDay() :
+                null;
+
+            if ($startDate && $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            } elseif ($startDate) {
+                $query->where('created_at', '>=', $startDate);
+            } elseif ($endDate) {
+                $query->where('created_at', '<=', $endDate);
+            }
 
             $datasets['datasets'][] = $query
-                ->whereBetween('created_at', [$startDate, $endDate])
                 ->where('stage_id', $stage->id)
                 ->count();
         }

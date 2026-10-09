@@ -1,0 +1,358 @@
+/* ============================================================
+   AureusERP – Auth Pages (Login / Register / Password Reset)
+   Bootstrap 5 + custom styles
+   ============================================================ */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- CSS Variables ---------- */
+:root {
+    --auth-primary:        #3b82f6;
+    --auth-primary-dark:   #2563eb;
+    --auth-primary-light:  #eff6ff;
+    --auth-accent:         #1d4ed8;
+    --auth-bg:             #f0f4ff;
+    --auth-card-bg:        #ffffff;
+    --auth-text:           #1e293b;
+    --auth-muted:          #64748b;
+    --auth-border:         #e2e8f0;
+    --auth-radius:         1rem;
+    --auth-shadow:         0 20px 60px rgba(59,130,246,.14), 0 4px 16px rgba(0,0,0,.06);
+    --auth-input-focus:    0 0 0 3px rgba(59,130,246,.2);
+}
+
+/* ---------- Reset / Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+.fi-body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--auth-bg) !important;
+    min-height: 100vh;
+}
+
+/* ---------- Layout wrapper ---------- */
+.fi-simple-layout.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(59,130,246,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 110%, rgba(29,78,216,.14) 0%, transparent 55%),
+        linear-gradient(160deg, #eef2ff 0%, #f0f9ff 50%, #eff6ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative blobs */
+.fi-simple-layout.auth-page::before,
+.fi-simple-layout.auth-page::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+}
+.fi-simple-layout.auth-page::before {
+    width: 420px; height: 420px;
+    background: rgba(59,130,246,.12);
+    top: -120px; left: -100px;
+}
+.fi-simple-layout.auth-page::after {
+    width: 360px; height: 360px;
+    background: rgba(99,102,241,.10);
+    bottom: -100px; right: -80px;
+}
+
+/* ---------- Card container ---------- */
+.fi-simple-main-ctn.auth-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.fi-simple-main {
+    background: var(--auth-card-bg) !important;
+    border-radius: var(--auth-radius) !important;
+    box-shadow: var(--auth-shadow) !important;
+    padding: 2.5rem 2.5rem 2rem !important;
+    width: 100% !important;
+    max-width: 460px !important;
+    border: 1px solid rgba(226,232,240,.8) !important;
+    /* Reset Filament's width utility classes */
+    --tw-max-width: none;
+}
+
+/* ---------- Auth header ---------- */
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.auth-logo img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.auth-logo .auth-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--auth-primary), var(--auth-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.auth-header > .auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--auth-text);
+    margin: 0 0 .35rem;
+    letter-spacing: -.02em;
+}
+
+.auth-subtitle {
+    color: var(--auth-muted);
+    font-size: .9rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Divider below heading */
+.auth-header::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--auth-primary), var(--auth-accent));
+    border-radius: 99px;
+    margin: .85rem auto 0;
+}
+
+/* ---------- Filament form fields ---------- */
+.fi-simple-main .fi-fo-field-wrp,
+.fi-simple-main .fi-fo-component-ctn {
+    margin-bottom: .1rem;
+}
+
+/* Labels */
+.fi-simple-main label,
+.fi-simple-main .fi-fo-field-wrp-label,
+.fi-simple-main .fi-fo-field-wrp > label {
+    font-weight: 500 !important;
+    font-size: .875rem !important;
+    color: var(--auth-text) !important;
+    margin-bottom: .35rem !important;
+}
+
+/* Inputs */
+.fi-simple-main input[type="email"],
+.fi-simple-main input[type="password"],
+.fi-simple-main input[type="text"],
+.fi-simple-main input[type="number"] {
+    width: 100% !important;
+    padding: .65rem 1rem !important;
+    border: 1.5px solid var(--auth-border) !important;
+    border-radius: .6rem !important;
+    font-size: .9rem !important;
+    color: var(--auth-text) !important;
+    background: #fafbff !important;
+    transition: border-color .2s, box-shadow .2s !important;
+    outline: none !important;
+}
+
+.fi-simple-main input:focus {
+    border-color: var(--auth-primary) !important;
+    box-shadow: var(--auth-input-focus) !important;
+    background: #fff !important;
+}
+
+/* Password toggle wrapper */
+.fi-simple-main .fi-input-wrp {
+    border-radius: .6rem !important;
+    overflow: hidden;
+}
+
+/* Submit / primary button */
+.fi-simple-main .fi-btn-primary,
+.fi-simple-main button[type="submit"],
+.fi-simple-main .fi-btn[data-indicator-loading] {
+    width: 100% !important;
+    padding: .75rem 1.5rem !important;
+    background: linear-gradient(135deg, var(--auth-primary) 0%, var(--auth-accent) 100%) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: .95rem !important;
+    border: none !important;
+    border-radius: .6rem !important;
+    cursor: pointer !important;
+    transition: transform .15s, box-shadow .15s !important;
+    box-shadow: 0 4px 14px rgba(37,99,235,.4) !important;
+    letter-spacing: .01em;
+}
+
+.fi-simple-main .fi-btn-primary:hover,
+.fi-simple-main button[type="submit"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(37,99,235,.5) !important;
+}
+
+.fi-simple-main .fi-btn-primary:active,
+.fi-simple-main button[type="submit"]:active {
+    transform: translateY(0) !important;
+}
+
+/* Forgot password / secondary links */
+.fi-simple-main a {
+    color: var(--auth-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: color .15s;
+}
+.fi-simple-main a:hover {
+    color: var(--auth-accent) !important;
+    text-decoration: underline !important;
+}
+
+/* Checkbox (Remember me) */
+.fi-simple-main input[type="checkbox"] {
+    accent-color: var(--auth-primary);
+    width: 1rem;
+    height: 1rem;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+/* Validation error messages */
+.fi-simple-main .fi-fo-field-wrp-error-message,
+.fi-simple-main [data-validation-error] {
+    font-size: .8rem !important;
+    color: #ef4444 !important;
+    margin-top: .3rem !important;
+}
+
+/* Notification / alert banners */
+.fi-simple-main .fi-no-notification {
+    border-radius: .6rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* ---------- Social / extra actions area ---------- */
+.fi-simple-main .fi-form-actions {
+    margin-top: 1.25rem !important;
+}
+
+/* ---------- Footer ---------- */
+.auth-footer {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--auth-border);
+    text-align: center;
+}
+
+.auth-footer p {
+    font-size: .8rem;
+    color: var(--auth-muted);
+    margin: 0;
+}
+
+/* ---------- Dark mode support ---------- */
+.dark .fi-body,
+html.dark .fi-body {
+    background: #0f172a !important;
+}
+
+html.dark .fi-simple-layout.auth-page {
+    background:
+        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(59,130,246,.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 110%, rgba(29,78,216,.08) 0%, transparent 55%),
+        linear-gradient(160deg, #0f172a 0%, #0d1b2f 50%, #0f172a 100%) !important;
+}
+
+html.dark .fi-simple-main {
+    background: #1e293b !important;
+    border-color: rgba(255,255,255,.08) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5) !important;
+}
+
+html.dark .auth-header > .auth-title {
+    color: #f1f5f9 !important;
+}
+
+html.dark .auth-subtitle {
+    color: #94a3b8 !important;
+}
+
+html.dark .auth-footer {
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+html.dark .auth-footer p {
+    color: #64748b !important;
+}
+
+html.dark .fi-simple-main input[type="email"],
+html.dark .fi-simple-main input[type="password"],
+html.dark .fi-simple-main input[type="text"] {
+    background: #0f172a !important;
+    border-color: rgba(255,255,255,.1) !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark .fi-simple-main input:focus {
+    background: #0f172a !important;
+    border-color: var(--auth-primary) !important;
+}
+
+html.dark .fi-simple-main label,
+html.dark .fi-simple-main .fi-fo-field-wrp > label {
+    color: #cbd5e1 !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+    .fi-simple-main {
+        padding: 2rem 1.5rem 1.75rem !important;
+        border-radius: .75rem !important;
+    }
+
+    .fi-simple-layout.auth-page {
+        padding: 1rem;
+        align-items: flex-start;
+        padding-top: 2rem;
+    }
+
+    .auth-logo img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 360px) {
+    .fi-simple-main {
+        padding: 1.5rem 1.25rem !important;
+    }
+}
+
+/* ---------- Subtle entrance animation ---------- */
+@keyframes authFadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.fi-simple-main-ctn.auth-card {
+    animation: authFadeUp .45s cubic-bezier(.22,1,.36,1) both;
+}

@@ -12,7 +12,7 @@ class LaunchBarcode extends Page
 
     protected string $view = 'barcode::filament.pages.launch-barcode';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-qr-code';
+    protected static string|\BackedEnum|null $navigationIcon = null;
 
     protected static ?string $slug = 'barcode-app';
 
